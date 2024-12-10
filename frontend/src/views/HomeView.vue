@@ -4,6 +4,6 @@
 
 <template>
   <main>
-    <TheWelcome />
+    <h1>Jó kedvem van!</h1>
   </main>
 </template>
