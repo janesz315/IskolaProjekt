@@ -7,7 +7,7 @@ import { RouterLink, RouterView } from "vue-router";
     <div class="wrapper">
       <nav class="my-border p-4">
         <RouterLink to="/">Home</RouterLink> |
-        <RouterLink to="/kartyak">Kártyák</RouterLink>
+        <RouterLink to="/cards">Cards</RouterLink>
       </nav>
     </div>
 
