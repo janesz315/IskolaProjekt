@@ -4,6 +4,6 @@
 
 <template>
   <main>
-    <h1>Jó kedvem van!</h1>
+    <h1>janesz is in a good mood</h1>
   </main>
 </template>
