@@ -7,6 +7,8 @@
         class="form-select"
         style="width: 150px"
         aria-label="Default select example"
+        v-model="howManyCards"
+        @change="handleCardsChange"
       >
         <option
           v-for="(number, index) in howManyCardsArray"
@@ -46,8 +48,8 @@ export default {
     };
   },
   async mounted() {
-    this.getClassRoster();
-    this.getPageNumbers();
+    await this.getClassRoster();
+    await this.getPageNumbers();
   },
   methods: {
     async getClassRoster() {
@@ -65,6 +67,10 @@ export default {
       for (let i = 0; i < this.howManyCards; i++) {
         this.pagenumbersArray.push(i + 1);
       }
+    },
+    handleCardsChange() {
+      this.getClassRoster();  // Fetch new cards based on selected number
+      this.getPageNumbers();  // Recalculate page numbers based on new selection
     },
   },
 };
