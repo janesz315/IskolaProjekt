@@ -62,9 +62,9 @@ export default {
     async getPageNumbers() {
       const url = `${this.urlApi}/queryHanyOldalVan/${this.howManyCards}`;
       const response = await axios.get(url);
-      this.howManyCards = response.data.data.oldalszam;
+      const totalPages = response.data.data.oldalszam;
       this.pagenumbersArray = [];
-      for (let i = 0; i < this.howManyCards; i++) {
+      for (let i = 0; i < totalPages; i++) {
         this.pagenumbersArray.push(i + 1);
       }
     },
