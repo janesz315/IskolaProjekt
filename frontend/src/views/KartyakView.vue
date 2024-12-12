@@ -8,16 +8,12 @@
       <select
         class="form-select"
         style="width: 150px"
-        aria-label="Default select example"
         v-model="howManyCards"
-        @change="handleCardsChange"
+        @change="getPageNumbers"
       >
         <!-- Loop through the array of options -->
         <option
-          v-for="(number, index) in howManyCardsArray"
-          :key="index"
-          :value="number"
-        >
+          v-for="(number, index) in howManyCardsArray" :key="index" :value="number">
           {{ number }}
           <!-- Display each option value -->
         </option>
@@ -38,11 +34,10 @@
     <!-- @nextPage: Listen for 'Next' page change -->
     <!-- isPreviousDisabled: Disable 'Previous' button if necessary -->
     <!-- isNextDisabled: Disable 'Next' button if necessary -->
-    <div class="p-2">
+    <div class="p-3">
       <Paginator
         :pagenumbers="pagenumbersArray"
-        :currentPage="currentPage"
-        :totalPages="totalPages"
+        :currentPage="currentPage"        
         @changePage="handlePageChange"
         @previousPage="handlePreviousPage"
         @nextPage="handleNextPage"
@@ -72,7 +67,7 @@ export default {
   },
   // Fetch data when the component is mounted
   async mounted() {
-    await this.getClassRoster(); // Get the cards data
+    // await this.getClassRoster(); // Get the cards data
     await this.getPageNumbers(); // Get the total number of pages
   },
   methods: {
@@ -87,22 +82,21 @@ export default {
       const url = `${this.urlApi}/queryHanyOldalVan/${this.howManyCards}`;
       const response = await axios.get(url); // Make a GET request to fetch the page number data
       this.totalPages = response.data.data.oldalszam; // Assign total number of pages to totalPages
-      this.pagenumbersArray = []; // Reset the page numbers array
+      // this.pagenumbersArray = []; // Reset the page numbers array
       // Populate the page numbers array with the available page numbers
-      for (let i = 0; i < this.totalPages; i++) {
-        this.pagenumbersArray.push(i + 1); // Add page numbers starting from 1
-      }
+      this.pagenumbersArray = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      // for (let i = 0; i < this.totalPages; i++) {
+      //   this.pagenumbersArray.push(i + 1); // Add page numbers starting from 1
+      // }
 
       // If the current page exceeds the total pages, adjust to the last available page
       if (this.currentPage > this.totalPages) {
-        this.currentPage = this.totalPages > 0 ? this.totalPages : 1; // Set the current page to the last available page or 1 if no pages
+        this.currentPage = this.totalPages || 1;
+        // this.currentPage = this.totalPages > 0 ? this.totalPages : 1; // Set the current page to the last available page or 1 if no pages
       }
       this.getClassRoster(); // Fetch the cards again with the updated page
     },
-    // Handle changes in the number of cards per page
-    handleCardsChange() {
-      this.getPageNumbers(); // Recalculate page numbers based on new selection
-    },
+
     // Handle when a user clicks on a page number
     handlePageChange(page) {
       if (page !== this.currentPage) {

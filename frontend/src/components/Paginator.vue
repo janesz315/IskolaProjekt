@@ -1,21 +1,20 @@
 <template>
-  <nav aria-label="...">
+  <nav aria-label="Pagination">
     <ul class="pagination">
+      <!-- 'Previous' button -->
       <li class="page-item" :class="{ disabled: isPreviousDisabled }">
-        <a class="page-link" href="#" @click.prevent="goToPreviousPage"
-          >Previous</a
-        >
+        <a class="page-link" href="#" @click.prevent="goToPreviousPage">Previous</a>
       </li>
+      <!-- Buttons of the pages -->
       <li
         class="page-item"
         v-for="number in pagenumbers"
         :key="number"
         :class="{ active: currentPage === number }"
       >
-        <a class="page-link" href="#" @click.prevent="goToPage(number)">{{
-          number
-        }}</a>
+        <a class="page-link" href="#" @click.prevent="goToPage(number)">{{number}}</a>
       </li>
+      <!-- 'Next' button -->
       <li class="page-item" :class="{ disabled: isNextDisabled }">
         <a class="page-link" href="#" @click.prevent="goToNextPage">Next</a>
       </li>
@@ -28,7 +27,6 @@ export default {
   props: [
     "pagenumbers",
     "currentPage",
-    "totalPages",
     "isPreviousDisabled",
     "isNextDisabled",
   ],
@@ -46,5 +44,4 @@ export default {
 };
 </script>
   
-  <style scoped>
-</style>
+<style scoped></style>
