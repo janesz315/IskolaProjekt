@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex justify-content-between align-items-center">
       <h1>Cards</h1>
-        <!-- We choose how many cards we want to see -->
+      <!-- We choose how many cards we want to see -->
       <select
         class="form-select"
         style="width: 150px"
@@ -24,7 +24,7 @@
 
     <!-- Pagination -->
     <div class="p-2">
-      <Paginator></Paginator>
+      <Paginator :pagenumbers="pagenumbersArray"></Paginator>
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@ import axios from "axios";
 import Cards from "@/components/Cards.vue";
 import Paginator from "@/components/Paginator.vue";
 export default {
-  components: { Cards, Paginator},
+  components: { Cards, Paginator },
   data() {
     return {
       urlApi: "http://localhost:8000/api",
@@ -42,10 +42,12 @@ export default {
       currentPage: 1,
       howManyCards: 3,
       howManyCardsArray: [1, 2, 3, 4, 5, 6, 7, 10, 20],
+      pagenumbersArray: [],
     };
   },
   async mounted() {
     this.getClassRoster();
+    this.getPageNumbers();
   },
   methods: {
     async getClassRoster() {
@@ -53,6 +55,16 @@ export default {
       const response = await axios.get(url);
       this.cards = response.data.data;
       console.log(this.cards);
+    },
+
+    async getPageNumbers() {
+      const url = `${this.urlApi}/queryHanyOldalVan/${this.howManyCards}`;
+      const response = await axios.get(url);
+      this.howManyCards = response.data.data.oldalszam;
+      this.pagenumbersArray = [];
+      for (let i = 0; i < this.howManyCards; i++) {
+        this.pagenumbersArray.push(i + 1);
+      }
     },
   },
 };
