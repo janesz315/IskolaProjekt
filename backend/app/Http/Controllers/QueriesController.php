@@ -79,30 +79,35 @@ class QueriesController extends Controller
     }
     
     public function queryDiakKeres(string $nev){
+        // return response()->json($nev, options:JSON_UNESCAPED_UNICODE);
         // $query ='
         //     SELECT * FROM diaks
         //         WHERE nev = "'.$nev.'"';
         // $rows= DB::select($query);
+        // $query ='
+        // $query ='
+        // SELECT d.id,osztalyid, nev, neme, szuletett, helyseg, osztondij, atlag, osztalynev from diaks d
+        //         INNER JOIN osztalies o ON d.osztalyId = o.id
+        //         WHERE nev = "'.$nev.'"';
+        // $rows= DB::select($query,[$nev]);
         $query ='
-        SELECT * FROM diaks
-            WHERE nev = ?';
-        $rows= DB::select($query,[$nev]);
+        SELECT d.id,osztalyid, nev, neme, szuletett, helyseg, osztondij, atlag, osztalynev from diaks d
+                INNER JOIN osztalies o ON d.osztalyId = o.id
+                WHERE nev = "'.$nev.'"';
+        $rows= DB::select($query);
         $data = [
             'message' => 'ok',
-            'data' => $rows
+            'data' => $rows,
+            'sql' => $query
         ];
- 
-        return response()->json($data, options:JSON_UNESCAPED_UNICODE);
-        // $query = "SELECT * FROM diaks WHERE nev = ?";  // Az SQL lekérdezést normál idézőjelekkel
-        // // $query = `SELECT * FROM diaks WHERE nev = "'.$nev.'"`;  // Az SQL lekérdezést normál idézőjelekkel
-        // $rows = DB::select($query, [$nev]);  // A paraméterek egyszeri átadása
-    
+
         // $data = [
         //     'message' => 'ok',
-        //     'data' => $rows
+        //     'data' => $rows,
+        //     'sql' => $query
         // ];
-    
-        // return response()->json($data, JSON_UNESCAPED_UNICODE); // Az options a json visszatérésnél helyes
+
+        return response()->json($data, options:JSON_UNESCAPED_UNICODE);
     }
 }
 

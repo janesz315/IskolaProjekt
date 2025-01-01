@@ -1,14 +1,7 @@
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-</script>
-
 <template>
   <div class="container-fluid my-container">
     <div class="wrapper">
-      <nav class="my-border p-4">
-        <RouterLink to="/">Home</RouterLink> |
-        <RouterLink to="/cards">Cards</RouterLink>
-      </nav>
+      <Menu />
     </div>
 
     <div class="my-border p-2">
@@ -16,6 +9,15 @@ import { RouterLink, RouterView } from "vue-router";
     </div>
   </div>
 </template>
+
+<script>
+import { RouterLink, RouterView } from "vue-router"
+
+import Menu from "./components/Menu.vue";
+export default {
+  components: { Menu },
+}
+</script>
 
 <style scoped>
 </style>

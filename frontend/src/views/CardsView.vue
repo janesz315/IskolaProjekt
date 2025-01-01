@@ -2,6 +2,12 @@
   <div>
     <div class="d-flex justify-content-between align-items-center">
       <h1>Cards</h1>
+      <p class="m-0">
+        $route
+          .path:{{ $route.path }} |
+          .name:{{ $route.name }} |
+          .params:{{ $route.params }}
+      </p>
       <!-- Dropdown to select how many cards to display per page -->
       <!-- v-model: Data binding to the howManyCards variable -->
       <!-- @change: Trigger change when a new value is selected  -->
@@ -52,14 +58,15 @@
 import axios from "axios";
 import Cards from "@/components/Cards.vue"; //Import the Cards component
 import Paginator from "@/components/Paginator.vue"; // Import the Paginator component
+import {BASE_URL} from '../helpers/baseUrls'
 export default {
   components: { Cards, Paginator },
   data() {
     return {
-      urlApi: "http://localhost:8000/api", // Base URL for the API
+      urlApi: BASE_URL, // Base URL for the API
       cards: [], // Array to hold the card data fetched from the API
-      currentPage: 1, // The current page that is displayed
-      howManyCards: 3, // The number of cards displayed per page
+      currentPage: this.$route.params.currentPage, // The current page that is displayed
+      howManyCards: this.$route.params.howManyCards, // The number of cards displayed per page
       howManyCardsArray: [1, 2, 3, 4, 5, 6, 7, 10, 20], // The available options for how many cards per page
       pagenumbersArray: [], // Array to store the page numbers for pagination
       totalPages: 1, // Total number of pages (calculated based on the data)
@@ -67,8 +74,12 @@ export default {
   },
   // Fetch data when the component is mounted
   async mounted() {
+    this.howManyCardsCorrection();
     // await this.getClassRoster(); // Get the cards data
     await this.getPageNumbers(); // Get the total number of pages
+  },
+  watch:{
+    $route: "routeChanged", 
   },
   methods: {
     // Fetch the list of cards based on the current page and number of cards per page
@@ -95,6 +106,7 @@ export default {
         // this.currentPage = this.totalPages > 0 ? this.totalPages : 1; // Set the current page to the last available page or 1 if no pages
       }
       this.getClassRoster(); // Fetch the cards again with the updated page
+      this.routerReplacer();
     },
 
     // Handle when a user clicks on a page number
@@ -118,6 +130,31 @@ export default {
         this.getClassRoster(); // Fetch the cards for the next page
       }
     },
+    routerReplacer(){
+      const routeName = this.$route.name;
+      this.$router.push({
+        name: routeName,
+        params: {
+          currentPage: this.currentPage,
+          howManyCards: this.howManyCards,
+        },
+      });
+    },
+    howManyCardsCorrection(){
+      if (!this.howManyCardsArray.includes(this.howManyCards)) {
+        this.howManyCards = this.howManyCardsArray.filter(x => x <= this.howManyCards).sort((a,b) => b-a)[0];
+      }
+    },
+    routeChanged(){
+      if (this.currentPage != this.$route.params.currentPage ) {
+        this.currentPage= this.$route.params.currentPage; // The current page that is displayed
+        
+      }
+      if (this.howManyCards != this.$route.params.howManyCards) {
+        
+        this.howManyCards= this.$route.params.howManyCards; // The number of cards displayed per page
+      }
+    }
   },
 };
 </script>
