@@ -13,6 +13,9 @@
           autocomplete="username"
           required
         />
+        <div v-if="username.length < 2" class="text-danger">
+          Username must be at least 2 characters long.
+        </div>
       </div>
 
       <!-- Email -->
@@ -110,32 +113,46 @@ export default {
     },
   },
   methods: {
-    async handleSubmit() {
-      const url = `${BASE_URL}/users`; // Az API végpont
-      const headers = {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      };
+  async handleSubmit() {
+    if (this.isFormInvalid) {
+      alert("Please fix the errors in the form.");
+      return;
+    }
 
-      const payload = {
-        name: this.username,
-        email: this.email,
-        password: this.password,
-      };
-      this.isLoading = true;
-      try {
-        const response = await axios.post(url, payload, { headers });
-        console.log("Registration response:", response.data);
-        alert("Registration successful!");
-        this.$router.push("/login"); // Átirányítás a login oldalra
-      } catch (error) {
-        console.error("Registration error:", error.response?.data || error);
-        alert("Registration failed. Please try again.");
-      } finally {
-        this.isLoading = false;
-      }
-    },
+    const url = `${BASE_URL}/users`;
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+
+    const payload = {
+      name: this.username,
+      email: this.email,
+      password: this.password,
+    };
+
+    this.isLoading = true;
+    try {
+  const response = await axios.post(url, payload, { headers });
+  alert("Registration successful!");
+  this.$router.push("/login");
+} catch (error) {
+  const status = error.response?.status;
+  if (status === 409) {
+    alert("Error: This email address is already registered.");
+  } else if (status === 400) {
+    alert("Error: Invalid request. Please check your inputs.");
+  } else if (status === 500) {
+    alert("Error: Server error. Please try again later.");
+  } else {
+    alert("An unknown error occurred. Please try again.");
+  }
+} finally {
+      this.isLoading = false;
+    }
   },
+},
+
 };
 </script>
 

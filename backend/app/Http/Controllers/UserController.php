@@ -70,24 +70,19 @@ class UserController extends Controller
     }
 
     public function store(StoreUserRequest $request)
-    {
-
-        $rows = User::where('email', $request['email'])
-            ->get();
-        if (count($rows)!=0) {
-            # már van ilyen email
-            $data = [
-                'message' => 'This email alredy exists',
-                'email' => $request['email']
-            ];
-        } else {
-            # még nincs ilyen email
-            $rows = User::create(attributes: $request->all());
-            $data = ['rows' => $rows];
-        }
-                    
-        return response()->json($data, options:JSON_UNESCAPED_UNICODE);
+{
+    $rows = User::where('email', $request['email'])->get();
+    if (count($rows) != 0) {
+        return response()->json([
+            'message' => 'This email already exists',
+            'email' => $request['email']
+        ], 409); // 409 Conflict
     }
+
+    $rows = User::create(attributes: $request->all());
+    return response()->json(['rows' => $rows], 201, options:JSON_UNESCAPED_UNICODE); // 201 Created
+}
+
 
     public function destroy(int $id)
     {
