@@ -26,7 +26,9 @@
           autocomplete="email"
           required
         />
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        <div id="emailHelp" class="form-text">
+          We'll never share your email with anyone else.
+        </div>
       </div>
 
       <!-- Password -->
@@ -56,26 +58,44 @@
           autocomplete="new-password"
           required
         />
-        <div v-if="confirmPassword && confirmPassword !== password" class="text-danger">
+        <div
+          v-if="confirmPassword && confirmPassword !== password"
+          class="text-danger"
+        >
           Passwords do not match.
         </div>
       </div>
 
       <!-- Submit button -->
-      <button type="submit" class="btn btn-primary" :disabled="isFormInvalid">Submit</button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        :disabled="isFormInvalid || isLoading"
+      >
+        <span
+          v-if="isLoading"
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        <span v-else>Submit</span>
+      </button>
     </form>
   </div>
 </template>
 
 
 <script>
+import axios from "axios";
+import { BASE_URL } from "../../helpers/baseUrls";
 export default {
   data() {
     return {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      isLoading: false,
     };
   },
   computed: {
@@ -90,9 +110,30 @@ export default {
     },
   },
   methods: {
-    handleSubmit() {
-      // Handle form submission, e.g., send data to the server
-      alert('Form submitted successfully!');
+    async handleSubmit() {
+      const url = `${BASE_URL}/users`; // Az API végpont
+      const headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      };
+
+      const payload = {
+        name: this.username,
+        email: this.email,
+        password: this.password,
+      };
+      this.isLoading = true;
+      try {
+        const response = await axios.post(url, payload, { headers });
+        console.log("Registration response:", response.data);
+        alert("Registration successful!");
+        this.$router.push("/login"); // Átirányítás a login oldalra
+      } catch (error) {
+        console.error("Registration error:", error.response?.data || error);
+        alert("Registration failed. Please try again.");
+      } finally {
+        this.isLoading = false;
+      }
     },
   },
 };
