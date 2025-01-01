@@ -74,6 +74,8 @@ export default {
   },
   // Fetch data when the component is mounted
   async mounted() {
+    this.currentPage = parseInt(this.$route.params.currentPage) || 1; // Alapértelmezett oldal 1
+    this.howManyCards = parseInt(this.$route.params.howManyCards) || this.howManyCardsArray[0];
     this.howManyCardsCorrection();
     // await this.getClassRoster(); // Get the cards data
     await this.getPageNumbers(); // Get the total number of pages
@@ -113,6 +115,7 @@ export default {
     handlePageChange(page) {
       if (page !== this.currentPage) {
         this.currentPage = page; // Update the current page
+        this.routerReplacer(); // Update the route parameters
         this.getClassRoster(); // Fetch the cards for the new page
       }
     },
@@ -120,6 +123,7 @@ export default {
     handlePreviousPage() {
       if (this.currentPage > 1) {
         this.currentPage--; // Go to the previous page
+        this.routerReplacer(); // Update the route parameters
         this.getClassRoster(); // Fetch the cards for the previous page
       }
     },
@@ -127,6 +131,7 @@ export default {
     handleNextPage() {
       if (this.currentPage < this.totalPages) {
         this.currentPage++; // Go to the next page
+        this.routerReplacer(); // Update the route parameters
         this.getClassRoster(); // Fetch the cards for the next page
       }
     },
