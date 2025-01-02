@@ -13,7 +13,7 @@
           autocomplete="username"
           required
         />
-        <div v-if="username.length < 2" class="text-danger">
+        <div v-if="username && username.length < 2" class="text-danger">
           Username must be at least 2 characters long.
         </div>
       </div>
@@ -113,46 +113,45 @@ export default {
     },
   },
   methods: {
-  async handleSubmit() {
-    if (this.isFormInvalid) {
-      alert("Please fix the errors in the form.");
-      return;
-    }
+    async handleSubmit() {
+      if (this.isFormInvalid) {
+        alert("Please fix the errors in the form.");
+        return;
+      }
 
-    const url = `${BASE_URL}/users`;
-    const headers = {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    };
+      const url = `${BASE_URL}/users`;
+      const headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      };
 
-    const payload = {
-      name: this.username,
-      email: this.email,
-      password: this.password,
-    };
+      const payload = {
+        name: this.username,
+        email: this.email,
+        password: this.password,
+      };
 
-    this.isLoading = true;
-    try {
-  const response = await axios.post(url, payload, { headers });
-  alert("Registration successful!");
-  this.$router.push("/login");
-} catch (error) {
-  const status = error.response?.status;
-  if (status === 409) {
-    alert("Error: This email address is already registered.");
-  } else if (status === 400) {
-    alert("Error: Invalid request. Please check your inputs.");
-  } else if (status === 500) {
-    alert("Error: Server error. Please try again later.");
-  } else {
-    alert("An unknown error occurred. Please try again.");
-  }
-} finally {
-      this.isLoading = false;
-    }
+      this.isLoading = true;
+      try {
+        const response = await axios.post(url, payload, { headers });
+        alert("Registration successful!");
+        this.$router.push("/login");
+      } catch (error) {
+        const status = error.response?.status;
+        if (status === 409) {
+          alert("Error: This email address is already registered.");
+        } else if (status === 400) {
+          alert("Error: Invalid request. Please check your inputs.");
+        } else if (status === 500) {
+          alert("Error: Server error. Please try again later.");
+        } else {
+          alert("An unknown error occurred. Please try again.");
+        }
+      } finally {
+        this.isLoading = false;
+      }
+    },
   },
-},
-
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <h1>Szájkaratézó libsik</h1>
+  <h1>Classes</h1>
 </template>
 
 <script>

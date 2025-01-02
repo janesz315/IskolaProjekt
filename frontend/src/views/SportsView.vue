@@ -1,5 +1,5 @@
 <template>
-  <h1>Sport a kommunizmusban</h1>
+  <h1>Sports</h1>
 </template>
 
 <script>

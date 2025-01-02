@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <RouterLink class="navbar-brand" to="/">Școală</RouterLink>
+      <RouterLink class="navbar-brand" to="/">School</RouterLink>
       <button
         class="navbar-toggler"
         type="button"
@@ -29,15 +29,15 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-            Școală 
+            School
             </a>
             <ul class="dropdown-menu">
-              <li><RouterLink class="dropdown-item" to="/cards/1/5">Kártyák</RouterLink></li>
-              <li><RouterLink class="dropdown-item" to="/searchstudent">Tanuló keresése</RouterLink></li>
+              <li><RouterLink class="dropdown-item" to="/cards/1/5">Cards</RouterLink></li>
+              <li><RouterLink class="dropdown-item" to="/searchstudent">Look for students</RouterLink></li>
               <li><hr class="dropdown-divider" /></li>
-              <li><RouterLink class="dropdown-item" to="/sports" v-if="stateAuth.user">Sportok</RouterLink></li>
-              <li><RouterLink class="dropdown-item" to="/classes" v-if="stateAuth.user">Osztályok</RouterLink></li>
-              <li><RouterLink class="dropdown-item" to="/students" v-if="stateAuth.user">Tanulók</RouterLink></li>
+              <li><RouterLink class="dropdown-item" to="/sports" v-if="stateAuth.user">Sports</RouterLink></li>
+              <li><RouterLink class="dropdown-item" to="/classes" v-if="stateAuth.user">Classes</RouterLink></li>
+              <li><RouterLink class="dropdown-item" to="/students" v-if="stateAuth.user">Students</RouterLink></li>
             </ul>
           </li>
           <li class="nav-item dropdown">

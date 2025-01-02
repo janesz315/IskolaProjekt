@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h1>Kommunisták keresése</h1>
+      <h1>Look for a student</h1>
     </div>
     <div class="d-flex" role="search">
       <input
