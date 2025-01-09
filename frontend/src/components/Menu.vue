@@ -34,6 +34,7 @@
             <ul class="dropdown-menu">
               <li><RouterLink class="dropdown-item" to="/cards/1/5">Cards</RouterLink></li>
               <li><RouterLink class="dropdown-item" to="/searchstudent">Look for students</RouterLink></li>
+              <li><RouterLink class="dropdown-item" to="/classmembers">Members of the class</RouterLink></li>
               <li><hr class="dropdown-divider" /></li>
               <li><RouterLink class="dropdown-item" to="/sports" v-if="stateAuth.user">Sports</RouterLink></li>
               <li><RouterLink class="dropdown-item" to="/classes" v-if="stateAuth.user">Classes</RouterLink></li>

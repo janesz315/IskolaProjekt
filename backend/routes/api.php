@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 //QUERIES
 Route::get('/queryOsztalynevsor', [QueriesController::class, 'queryOsztalynevsor']);
+Route::get('/queryOsztalynevsorObj', [QueriesController::class, 'queryOsztalynevsorObj']);
 Route::get('/queryOsztalytasrsak/{nev}', [QueriesController::class, 'queryOsztalytasrsak']);
 Route::get('/queryOsztalynevsorLimit/{oldal}/{limit}', [QueriesController::class, 'queryOsztalynevsorLimit']);
 Route::get('/queryHanyOldalVan/{limit}', [QueriesController::class, 'queryHanyOldalVan']);

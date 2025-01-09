@@ -66,6 +66,15 @@ const router = createRouter({
       meta: {title: (route) => 'Look for a student'}
     },
     {
+      path: '/classmembers',
+      name: 'classMembers',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/ClassMembersView.vue'),
+      meta: {title: (route) => 'View the members of the classes'}
+    },
+    {
       path: '/sports',
       name: 'sports',
       // route level code-splitting
